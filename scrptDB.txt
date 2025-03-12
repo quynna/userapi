@@ -1,0 +1,33 @@
+-- Crear la base de datos
+CREATE DATABASE IF NOT EXISTS user_db;
+USE user_db;
+
+-- Crear la tabla de usuarios
+CREATE TABLE Usuario (
+    id VARCHAR(36) PRIMARY KEY,        -- UUID como identificador único
+    name VARCHAR(100) NOT NULL,        -- Nombre del usuario
+    email VARCHAR(100) NOT NULL UNIQUE, -- Correo único
+    password VARCHAR(255) NOT NULL,    -- Contraseña encriptada
+    token TEXT,                        -- Token JWT
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
+    modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Última actualización
+    last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Último ingreso
+    is_active BOOLEAN DEFAULT TRUE    -- Estado del usuario
+);
+
+-- Crear la tabla de teléfonos
+CREATE TABLE Telefono (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(36),
+    number VARCHAR(15) NOT NULL,
+    citycode VARCHAR(10) NOT NULL,
+    contrycode VARCHAR(10) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Usuario(id) ON DELETE CASCADE
+);
+
+-- Insertar datos de prueba (opcional)
+INSERT INTO Usuario (id, name, email, password, token) VALUES
+(UUID(), 'Juan Rodriguez', 'juan@rodriguez.org', 'hashed_password', 'jwt_token');
+
+INSERT INTO Telefono (user_id, number, citycode, contrycode) VALUES
+((SELECT id FROM Usuario WHERE email='juan@rodriguez.org'), '1234567', '1', '57');
