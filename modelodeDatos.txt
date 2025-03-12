@@ -1,0 +1,48 @@
+ Componentes del Diagrama
+Cliente (Postman, cURL, Frontend, etc.)
+
+Envía solicitudes HTTP a la API.
+Controlador (UserController)
+
+Gestiona las solicitudes y respuestas HTTP.
+Servicio (UserService)
+
+Contiene la lógica de negocio (validaciones, generación de tokens, etc.).
+Repositorio (UserInterface)
+
+Interactúa con la base de datos para almacenar y recuperar datos.
+Base de Datos (H2 o MySQL)
+
+Almacena la información de los usuarios.
+Representación del Diagrama
+scss
+Copiar
+Editar
+┌────────────────────────────┐
+│        Cliente             │
+│ (Postman, Frontend, cURL)  │
+└───────────┬────────────────┘
+            │  (HTTP JSON)
+            ▼
+┌────────────────────────────┐
+│      UserController        │
+│ (Gestiona las solicitudes) │
+└───────────┬────────────────┘
+            │
+            ▼
+┌────────────────────────────┐
+│        UserService         │
+│ (Lógica de negocio, JWT)   │
+└───────────┬────────────────┘
+            │
+            ▼
+┌────────────────────────────┐
+│       UserInterface       │
+│ (Acceso a Base de Datos)   │
+└───────────┬────────────────┘
+            │
+            ▼
+┌────────────────────────────┐
+│     Base de Datos (H2)     │
+│     (Usuarios, Tokens)     │
+└────────────────────────────┘
